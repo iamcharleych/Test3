@@ -1,0 +1,224 @@
+/**
+ * Shared file between builds so that they can all use the same dependencies and
+ * maven repositories.
+ **/
+ext.deps = [:]
+
+// region Versions
+def versions = [:]
+versions.archCore = "1.1.1"
+versions.room = "1.1.1"
+versions.lifecycle = "1.1.1"
+versions.paging = "1.0.0"
+versions.support = "28.0.0"
+versions.playServices = "16.0.0"
+versions.firebase = "16.0.0"
+versions.dagger = "2.16"
+versions.junit = "4.12"
+versions.espresso = "3.0.2"
+versions.retrofit = "2.4.0"
+versions.okhttp = "3.11.0"
+versions.ottoBus = "1.3.8"
+versions.mockwebserver = "3.8.1"
+versions.mockito = "2.7.19"
+versions.mockitoAll = "1.10.19"
+versions.constraintLayout = "1.1.3"
+versions.glide = "4.8.0"
+versions.androidGradlePlugin = "3.2.1"
+versions.rxJava2 = "2.2.2"
+versions.rxAndroid = "2.1.0"
+versions.androidTest = "1.0.2"
+versions.androidTestRules = "1.0.1"
+versions.kotlin = "1.2.71"
+// endregion
+
+// region Packages
+def packs = [:]
+packs.support = 'com.android.support'
+packs.constraintLayout = 'com.android.support.constraint'
+packs.rx = 'io.reactivex.rxjava2'
+packs.jakeWharton = 'com.jakewharton'
+packs.squareUpRetrofit = 'com.squareup.retrofit2'
+packs.squareUpOkhttp = 'com.squareup.okhttp3'
+packs.playServices = 'com.google.android.gms'
+packs.archCore = 'android.arch.core'
+packs.archRoom = 'android.arch.persistence.room'
+packs.lifecycle= 'android.arch.lifecycle'
+packs.paging = 'android.arch.paging'
+packs.squareUp = 'com.squareup'
+packs.dagger = 'com.google.dagger'
+packs.firebase = 'com.google.firebase'
+packs.androidTestEspresso = 'com.android.support.test.espresso'
+packs.androidTest = 'com.android.support.test'
+packs.mockito = 'org.mockito'
+packs.kotlin = 'org.jetbrains.kotlin'
+packs.glide = 'com.github.bumptech.glide'
+// endregion
+
+// region Support
+def support = [:]
+support.annotations = buildDependency(packs.support, "suppport-annotations", versions.support)
+support.appCompat = buildDependency(packs.support, "appcompat-v7", versions.support)
+support.recyclerView = buildDependency(packs.support, "recyclerview-v7", versions.support)
+support.cardView = buildDependency(packs.support, "cardview-v7", versions.support)
+support.design = buildDependency(packs.support, "design", versions.support)
+support.v4 = buildDependency(packs.support, "support-v4", versions.support)
+support.coreUtils = buildDependency(packs.support, "support-core-utils", versions.support)
+support.grid = buildDependency(packs.support, "gridlayout-v7", versions.support)
+support.palette = buildDependency(packs.support, 'palette-v7', versions.support)
+support.percent = buildDependency(packs.support, 'percent', versions.support)
+support.constraintLayout = buildDependency(packs.constraintLayout, 'constraint-layout', versions.constraintLayout)
+support.vectorDrawable = buildDependency(packs.support, 'support-vector-drawable', versions.support)
+support.multidex =buildDependency(packs.support, 'multidex', '1.0.3')
+deps.support = support
+// endregion
+
+// region Play Services
+def playServices = [:]
+playServices.base = buildDependency(packs.playServices, 'play-services-base', versions.playServices)
+playServices.location = buildDependency(packs.playServices, 'play-services-location', versions.playServices)
+playServices.analytics = buildDependency(packs.playServices, 'play-services-analytics', versions.playServices)
+playServices.maps = buildDependency(packs.playServices, 'play-services-maps', versions.playServices)
+playServices.gcm = buildDependency(packs.playServices, 'play-services-gcm', versions.playServices)
+deps.playServices = playServices
+// endregion
+
+// region Firebase
+def firebase = [:]
+firebase.core = buildDependency(packs.firebase, 'firebase-core', versions.firebase)
+firebase.fcm = buildDependency(packs.firebase, 'firebase-messaging', versions.firebase)
+deps.firebase = firebase
+// endregion
+
+// region Arch (Core, Lifecycle, Paging, Room)
+def archCore = [:]
+archCore.testing = buildDependency(packs.archCore, "common", versions.archCore)
+archCore.testing = buildDependency(packs.archCore, "core", versions.archCore)
+archCore.testing = buildDependency(packs.archCore, "core-testing", versions.archCore)
+archCore.testing = buildDependency(packs.archCore, "runtime", versions.archCore)
+
+def lifecycle = [:]
+lifecycle.common = buildDependency(packs.lifecycle, "common", versions.lifecycle)
+lifecycle.java8 = buildDependency(packs.lifecycle, "common-java8", versions.lifecycle)
+lifecycle.compiler = buildDependency(packs.lifecycle, "compiler", versions.lifecycle)
+lifecycle.extensions = buildDependency(packs.lifecycle, "extensions", versions.lifecycle)
+lifecycle.livedata = buildDependency(packs.lifecycle, "livedata", versions.lifecycle)
+lifecycle.livedataCore = buildDependency(packs.lifecycle, "livedata-core", versions.lifecycle)
+lifecycle.rx = buildDependency(packs.lifecycle, "reactivestreams", versions.lifecycle)
+lifecycle.runtime = buildDependency(packs.lifecycle, "runtime", versions.lifecycle)
+lifecycle.viewmodel = buildDependency(packs.lifecycle, "viewmodel", versions.lifecycle)
+
+def paging = [:]
+paging.common = buildDependency(packs.paging, "common", versions.paging)
+paging.runtime = buildDependency(packs.paging, "runtime", versions.paging)
+paging.rx = buildDependency(packs.paging, "rxjava2", versions.paging)
+
+def room = [:]
+room.common = buildDependency(packs.archRoom, "common", versions.room)
+room.compiler = buildDependency(packs.archRoom, "compiler", versions.room)
+room.guava = buildDependency(packs.archRoom, "guava", versions.room)
+room.migration = buildDependency(packs.archRoom, "migration", versions.room)
+room.runtime = buildDependency(packs.archRoom, "runtime", versions.room)
+room.rx = buildDependency(packs.archRoom, "rxjava2", versions.room)
+room.testing = buildDependency(packs.archRoom, "testing", versions.room)
+
+def arch = [:]
+arch.core = archCore
+arch.lifecycle = lifecycle
+arch.paging = paging
+arch.room = room
+deps.arch = arch
+// endregion
+
+// region SquareUp
+def squareUp = [:]
+squareUp.retrofit = buildDependency(packs.squareUpRetrofit, 'retrofit', versions.retrofit)
+squareUp.gson = buildDependency(packs.squareUpRetrofit, 'converter-gson', versions.retrofit)
+squareUp.mock = buildDependency(packs.squareUpRetrofit, 'retrofit-mock', versions.retrofit)
+squareUp.rxAdapter = buildDependency(packs.squareUpRetrofit, 'adapter-rxjava2', versions.retrofit)
+squareUp.okhttp = buildDependency(packs.squareUpOkhttp, 'okhttp', versions.okhttp)
+squareUp.loggingInterceptor = buildDependency(packs.squareUpOkhttp, 'logging-interceptor', versions.okhttp)
+squareUp.ottoBus = buildDependency(packs.squareUp, 'otto', versions.ottoBus)
+deps.squareUp = squareUp
+// endregion
+
+// region Rx
+def rx = [:]
+rx.java = buildDependency(packs.rx, 'rxjava', versions.rxJava)
+rx.android = buildDependency(packs.rx, 'rxandroid', versions.rxAndroid)
+deps.rx = rx
+// endregion
+
+// region Dagger
+def dagger = [:]
+dagger.runtime = buildDependency(packs.dagger, 'dagger', versions.dagger)
+dagger.android = buildDependency(packs.dagger, 'dagger-android', versions.dagger)
+dagger.androidSupport = buildDependency(packs.dagger, 'dagger-android-support', versions.dagger)
+dagger.compiler = buildDependency(packs.dagger, 'dagger-compiler', versions.dagger)
+dagger.androidSupportCompiler = buildDependency(packs.dagger, 'dagger-android-processor', versions.dagger)
+deps.dagger = dagger
+// endregion
+
+// region Espresso
+def espresso = [:]
+espresso.core = buildDependency(packs.androidTestEspresso, 'espresso-core', versions.espresso)
+espresso.contrib = buildDependency(packs.androidTestEspresso, 'espresso-contrib', versions.espresso)
+espresso.intents = buildDependency(packs.androidTestEspresso, 'espresso-intents', versions.espresso)
+// endregion
+
+// region Test
+def androidTest = [:]
+androidTest.runner = buildDependency(packs.androidTest, 'runner', versions.androidTest)
+androidTest.rules = buildDependency(packs.androidTest, 'rules', versions.androidTestRules)
+
+def mockito = [:]
+mockito.core = buildDependency(packs.mockito, 'mockito-core', versions.mockito)
+mockito.all = buildDependency(packs.mockito, 'mockito-all', versions.mockitoAll)
+
+def test = [:]
+test.android = androidTest
+test.espresso = espresso
+test.mockito = mockito
+test.junit = buildDependency("junit", "junit", versions.junit)
+deps.test = test
+// endregion
+
+// region Kotlin
+def kotlin = [:]
+kotlin.stdlib = buildDependency(packs.kotlin, 'kotlin-stdlib-jdk7', versions.kotlin)
+kotlin.test = buildDependency(packs.kotlin, 'kotlin-test-junit', versions.kotlin)
+kotlin.plugin = buildDependency(packs.kotlin, 'kotlin-gradle-plugin', versions.kotlin)
+deps.kotlin = kotlin
+// endregion
+
+// region Glide
+def glide = [:]
+glide.runtime = buildDependency(packs.glide, 'glide', versions.glide)
+glide.compiler = buildDependency(packs.glide, 'compiler', versions.glide)
+deps.glide = glide
+// endregion
+
+// region Gradle Plugin
+deps.androidGradlePlugin = "com.android.tools.build:gradle:$versions.androidGradlePlugin"
+ext.deps = deps
+// endregion
+
+// region Biuld Versions
+def buildVersions = [:]
+buildVersions.minSdk = 21
+buildVersions.targetSdk = 28
+buildVersions.compileSdk = 28
+buildVersions.buildTools = "28.0.3"
+ext.buildVersions = buildVersions
+// endregion
+
+static String buildDependency(String pack, String dependency, String version) {
+    return "${pack}:${dependency}:${version}"
+}
+
+static addRepos(RepositoryHandler handler) {
+    handler.jcenter()
+    handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    handler.google()
+}
+ext.addRepos = this.&addRepos

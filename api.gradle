@@ -1,0 +1,2 @@
+ext.API_BASE_URL = '\"http://partners.api.skyscanner.net/apiservices/\"'
+ext.API_KEY = '\"ss630745725358065467897349852985\"'

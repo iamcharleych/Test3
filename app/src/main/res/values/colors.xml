@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#04b1d4</color>
+    <color name="colorPrimaryDark">#0495b3</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="textTitle">#222</color>
+    <color name="textSubtitle">#cbcbcb</color>
+    <color name="textError">#e27979</color>
+
+    <color name="textTitleLight">#fff</color>
+    <color name="textSubtitleLight">#99ffffff</color>
+
+    <color name="listItemBackground">#fefefe</color>
+    <color name="divider">#d8d8d8</color>
+
+
+</resources>

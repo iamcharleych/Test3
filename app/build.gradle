@@ -1,0 +1,78 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion buildVersions.compileSdk
+    defaultConfig {
+        applicationId "com.chaplin.test3"
+        minSdkVersion buildVersions.minSdk
+        targetSdkVersion buildVersions.targetSdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "API_BASE_URL", API_BASE_URL)
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(':domain')
+    implementation project(':data')
+    implementation project(':common')
+
+    // support libs
+    implementation deps.support.appCompat
+    implementation deps.support.constraintLayout
+    implementation deps.support.recyclerView
+    implementation deps.support.cardView
+
+    // room
+    implementation deps.arch.room.runtime
+    implementation deps.arch.room.rx
+    annotationProcessor deps.arch.room.compiler
+
+    // lifecycle
+    implementation deps.arch.lifecycle.livedata
+    implementation deps.arch.lifecycle.runtime
+    implementation deps.arch.lifecycle.viewmodel
+    implementation deps.arch.lifecycle.extensions
+    annotationProcessor deps.arch.lifecycle.compiler
+
+    // paging
+    implementation deps.arch.paging.runtime
+
+    // square up
+    implementation deps.squareUp.retrofit
+    implementation deps.squareUp.okhttp
+    implementation deps.squareUp.gson
+    implementation deps.squareUp.rxAdapter
+    implementation deps.squareUp.loggingInterceptor
+
+    // rx
+    implementation deps.rx.java
+    implementation deps.rx.android
+
+    // dagger
+    implementation deps.dagger.runtime
+    annotationProcessor deps.dagger.compiler
+    implementation deps.dagger.android
+    implementation deps.dagger.androidSupport
+    annotationProcessor deps.dagger.androidSupportCompiler
+
+    // test
+    testImplementation deps.test.junit
+    androidTestImplementation deps.test.android.runner
+    androidTestImplementation deps.test.espresso.core
+}

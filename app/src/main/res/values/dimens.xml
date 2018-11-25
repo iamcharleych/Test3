@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="airline_logo_margin_right">16dp</dimen>
+    <dimen name="filter_panel_elevation">1dp</dimen>
+    <dimen name="over_panel_view_elevation">1.5dp</dimen>
+    <dimen name="action_bar_title_text_size">16sp</dimen>
+    <dimen name="action_bar_subtitle_text_size">12sp</dimen>
+    <dimen name="card_content_padding">16dp</dimen>
+    <dimen name="card_content_paddingBottom">10dp</dimen>
+    <dimen name="card_outer_margin_horiz">5dp</dimen>
+    <dimen name="card_outer_margin_vert">2.5dp</dimen>
+    <dimen name="card_divider_margin_bottom">10dp</dimen>
+</resources>

@@ -1,0 +1,59 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion buildVersions.compileSdk
+    defaultConfig {
+        minSdkVersion buildVersions.minSdk
+        targetSdkVersion buildVersions.targetSdk
+        versionCode 1
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "API_KEY", API_KEY)
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(':domain')
+    implementation project(':common')
+
+    // support libs
+    implementation deps.support.appCompat
+
+    // room
+    implementation deps.arch.room.runtime
+    implementation deps.arch.room.rx
+    annotationProcessor deps.arch.room.compiler
+
+    // paging
+    implementation deps.arch.paging.runtime
+
+    // square up
+    implementation deps.squareUp.retrofit
+    implementation deps.squareUp.okhttp
+    implementation deps.squareUp.gson
+    implementation deps.squareUp.rxAdapter
+    implementation deps.squareUp.loggingInterceptor
+
+    // rx
+    implementation deps.rx.java
+    implementation deps.rx.android
+
+    // test
+    testImplementation deps.test.junit
+}

@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Skyscanner Test</string>
+    <string name="sorts_and_filters">Sorts &amp; Filters</string>
+    <string name="search">Search</string>
+    <string name="about">About</string>
+    <string name="demo_mark">10.0</string>
+    <string name="demo_results_count">%d of %d results</string>
+
+    <string name="status_starting_session">Starting new session…</string>
+    <string name="status_loading_results">Loading itineraries…</string>
+
+    <string name="error_server_unavailable">Server unavailable</string>
+    <string name="error_validation_failed">Corrupted data</string>
+    <string name="error_forbidden">Unauthorized access</string>
+    <string name="error_too_many_requests">Too many requests. Try in a minute</string>
+    <string name="error_session_expired">Session expired. Starting new one…</string>
+    <string name="error_server">Opps, an error occurred on our server</string>
+    <string name="error_general">Unknown error</string>
+    <string name="error_unexpected">Unexpected error</string>
+</resources>

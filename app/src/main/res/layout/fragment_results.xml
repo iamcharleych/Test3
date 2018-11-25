@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/filterPanel"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/cardview_light_background"
+        android:elevation="@dimen/filter_panel_elevation"
+        app:elevation="@dimen/filter_panel_elevation"
+    />
+
+    <TextView
+        android:id="@+id/sortsAndFiltersButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="true"
+        android:textSize="12sp"
+        android:text="@string/sorts_and_filters"
+        android:textColor="@android:color/black"
+        android:elevation="@dimen/over_panel_view_elevation"
+        app:elevation="@dimen/over_panel_view_elevation"
+        android:layout_marginRight="16dp"
+        app:layout_constraintTop_toTopOf="@id/filterPanel"
+        app:layout_constraintBottom_toBottomOf="@id/filterPanel"
+        app:layout_constraintRight_toRightOf="@id/filterPanel"
+        app:layout_constraintVertical_bias="0.5"
+        tools:ignore="RtlHardcoded"/>
+
+    <ProgressBar
+        android:id="@+id/progressView"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:indeterminate="true"
+        android:layout_marginLeft="16dp"
+        android:visibility="gone"
+        android:elevation="@dimen/over_panel_view_elevation"
+        app:elevation="@dimen/over_panel_view_elevation"
+        app:layout_constraintTop_toTopOf="@id/statusView"
+        app:layout_constraintBottom_toBottomOf="@id/statusView"
+        app:layout_constraintLeft_toLeftOf="@id/filterPanel"
+        app:layout_constraintHorizontal_bias="0"
+        tools:visibility="visible"
+        tools:ignore="RtlHardcoded"/>
+
+    <TextView
+        android:id="@+id/statusView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:layout_marginLeft="4dp"
+        android:elevation="@dimen/over_panel_view_elevation"
+        app:elevation="@dimen/over_panel_view_elevation"
+        app:layout_constraintTop_toTopOf="@id/filterPanel"
+        app:layout_constraintBottom_toBottomOf="@id/filterPanel"
+        app:layout_constraintLeft_toRightOf="@id/progressView"
+        app:layout_constraintRight_toLeftOf="@id/sortsAndFiltersButton"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0.5"
+        app:layout_goneMarginLeft="16dp"
+        android:text="@string/demo_results_count"
+        tools:text="365 of 365 results"
+        tools:ignore="RtlHardcoded"/>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filterPanel">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/resultsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+</android.support.constraint.ConstraintLayout>

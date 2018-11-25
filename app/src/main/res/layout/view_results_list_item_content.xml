@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:showIn="@layout/view_results_list_item">
+
+    <include
+        android:id="@+id/outboundFlightContainer"
+        layout="@layout/view_result_card_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/card_content_padding"
+        android:layout_marginRight="@dimen/card_content_padding"/>
+
+    <include
+        android:id="@+id/inboundFlightContainer"
+        layout="@layout/view_result_card_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/card_content_padding"
+        android:layout_marginRight="@dimen/card_content_padding"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/card_content_padding"
+        android:layout_marginBottom="@dimen/card_divider_margin_bottom"
+        android:background="@color/divider"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/card_content_padding"
+        android:layout_marginRight="@dimen/card_content_padding">
+
+        <TextView
+            android:id="@+id/markView"
+            style="@style/TextTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_smile"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="@string/demo_mark"
+            tools:text="10.0" tools:ignore="RtlHardcoded"/>
+
+        <TextView
+            android:id="@+id/priceView"
+            style="@style/TextTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/markView"
+            app:layout_constraintBottom_toTopOf="@id/priceProviderView"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintVertical_bias="0.5"
+            tools:text="£35"/>
+
+        <TextView
+            android:id="@+id/priceProviderView"
+            style="@style/TextSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/markView"
+            app:layout_constraintTop_toBottomOf="@id/priceView"
+            tools:text="via WizzAir.com"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>
