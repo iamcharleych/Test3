@@ -26,8 +26,8 @@ public class Requests {
                 .with(ApiConstants.FIELD_INFANTS, String.valueOf(Constants.INFANTS_COUNT))
                 .with(ApiConstants.FIELD_LOCALE, "en-GB")
                 .with(ApiConstants.FIELD_LOCATION_SCHEMA, "sky")
-                .with(ApiConstants.FIELD_INBOUND_DATE, "2018-11-06")
-                .with(ApiConstants.FIELD_OUTBOUND_DATE, "2018-11-05");
+                .with(ApiConstants.FIELD_INBOUND_DATE, "2018-12-06")
+                .with(ApiConstants.FIELD_OUTBOUND_DATE, "2018-12-05");
     }
 
     public static final String OP_GET_POLL = "op_get_poll";

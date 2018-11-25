@@ -31,7 +31,7 @@
         android:layout_marginBottom="@dimen/card_divider_margin_bottom"
         android:background="@color/divider"/>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/card_content_padding"
@@ -72,6 +72,6 @@
             app:layout_constraintTop_toBottomOf="@id/priceView"
             tools:text="via WizzAir.com"/>
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

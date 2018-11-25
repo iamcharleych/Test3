@@ -1,5 +1,6 @@
 package com.chaplin.test3.ui.searchresults.viewmodel;
 
+import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -85,22 +86,26 @@ public class SearchResultsViewModel extends ViewModel {
 
         @Override
         public void onSubscribe(Subscription s) {
+            Log.d("@#$", "onSubscribe()");
             mDataViewState.setValue(DataLoadingViewState.loading());
         }
 
         @Override
         public void onNext(Void aVoid) {
+            Log.d("@#$", "onNext()");
             // no-op
         }
 
         @Override
         public void onError(Throwable t) {
+            Log.d("@#$", "onError(): throwable=" + t);
             mDataViewState.setValue(DataLoadingViewState.error(t));
             mDataViewState.setValue(DataLoadingViewState.idle());
         }
 
         @Override
         public void onComplete() {
+            Log.d("@#$", "onComplete()");
             mDataViewState.setValue(DataLoadingViewState.completed());
         }
     }

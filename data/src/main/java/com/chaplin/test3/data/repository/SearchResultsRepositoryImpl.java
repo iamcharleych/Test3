@@ -1,5 +1,6 @@
 package com.chaplin.test3.data.repository;
 
+import android.util.Log;
 import androidx.annotation.NonNull;
 import com.chaplin.test3.data.db.AppDatabase;
 import com.chaplin.test3.data.db.dao.*;
@@ -46,11 +47,20 @@ public class SearchResultsRepositoryImpl implements SearchResultsRepository {
             }
             return mSession.getPollingUrl(pageIndex);
         })
-                .flatMap(pollingUrl -> mRestClient.execute(Requests.poll(pollingUrl)))
-                .repeatWhen(flowable -> flowable
-                        .takeWhile(throwable -> throwable instanceof SessionExpiredException)
-                        .zipWith(Flowable.range(1, 3), (err, attempt) -> attempt)
-                        .flatMap(attemptNumber -> Flowable.timer(attemptNumber * THREE_SEC, TimeUnit.SECONDS)))
+                .flatMap(pollingUrl -> {
+                    Log.d("@#$", "flatMap(" + pollingUrl + " -> mRestClient.execute(Requests.poll(pollingUrl));");
+                    return mRestClient.execute(Requests.poll(pollingUrl));
+                })
+                .repeatWhen(flowable -> {
+                    Log.d("@#$", "repeatWhen()");
+                    return flowable
+                            .takeWhile(throwable -> throwable instanceof SessionExpiredException)
+                            .zipWith(Flowable.range(1, 3), (err, attempt) -> attempt)
+                            .flatMap(attemptNumber -> {
+                                Log.d("@#$", "flatMap("+ attemptNumber +" -> timer(" + attemptNumber * THREE_SEC + " sec))");
+                                return Flowable.timer(attemptNumber * THREE_SEC, TimeUnit.SECONDS);
+                            });
+                })
                 .takeUntil(dataResponse -> !shouldContinuePolling((PollController.Parser) dataResponse.responseObject))
                 .filter(dataResponse -> !shouldContinuePolling((PollController.Parser) dataResponse.responseObject))
                 .map(dataResponse -> (PollController.Parser) dataResponse.responseObject)

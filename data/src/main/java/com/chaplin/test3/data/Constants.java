@@ -18,10 +18,10 @@ public class Constants {
     static {
         Calendar cal = Calendar.getInstance();
 
-        cal.set(2018, 10, 5);
+        cal.set(2018, Calendar.DECEMBER, 5);
         OUTBOUND_DATE = new Date(cal.getTimeInMillis());
 
-        cal.set(2018, 10, 6);
+        cal.set(2018, Calendar.DECEMBER, 6);
         RETURN_DATE = new Date(cal.getTimeInMillis());
     }
 }
