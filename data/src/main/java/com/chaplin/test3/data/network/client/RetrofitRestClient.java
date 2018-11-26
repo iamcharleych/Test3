@@ -1,6 +1,7 @@
 package com.chaplin.test3.data.network.client;
 
-import com.chaplin.test3.data.network.client.controller.PollController;
+import android.util.Log;
+import com.chaplin.test3.data.network.client.controller.SearchController;
 import com.chaplin.test3.data.network.client.controller.SessionInitController;
 import com.chaplin.test3.data.network.core.DataRequest;
 import com.chaplin.test3.data.network.core.DataResponse;
@@ -20,6 +21,7 @@ public class RetrofitRestClient extends RestClient<Flowable<DataResponse>> {
 
     @Override
     public Flowable<DataResponse> execute(DataRequest request) {
+        Log.d("@#$", "RetrofitRestClient.execute(): request=" + request);
         final String operation = request.getOperation();
 
         Flowable<DataResponse> resultObservable = null;
@@ -28,8 +30,8 @@ public class RetrofitRestClient extends RestClient<Flowable<DataResponse>> {
                 resultObservable = SessionInitController.startSession(mApi, request.getParams());
                 break;
 
-            case Requests.OP_GET_POLL:
-                resultObservable = PollController.poll(mApi, request.getParams().get(PARAM_POLLING_URL));
+            case Requests.OP_GET_SEARCH:
+                resultObservable = SearchController.search(mApi, request.getParams().get(PARAM_POLLING_URL));
                 break;
 
             case DataRequest.NO_OPERATION:

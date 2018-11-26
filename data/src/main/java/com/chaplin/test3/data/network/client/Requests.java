@@ -30,9 +30,9 @@ public class Requests {
                 .with(ApiConstants.FIELD_OUTBOUND_DATE, "2018-12-05");
     }
 
-    public static final String OP_GET_POLL = "op_get_poll";
-    public static DataRequest poll(String pollingUrl) {
-        return new DataRequest(OP_GET_POLL)
+    public static final String OP_GET_SEARCH = "op_get_search";
+    public static DataRequest search(String pollingUrl) {
+        return new DataRequest(OP_GET_SEARCH)
                 .with(ApiConstants.PARAM_POLLING_URL, pollingUrl);
     }
 }

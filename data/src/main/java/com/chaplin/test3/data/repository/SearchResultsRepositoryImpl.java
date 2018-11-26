@@ -1,6 +1,5 @@
 package com.chaplin.test3.data.repository;
 
-import android.util.Log;
 import androidx.annotation.NonNull;
 import com.chaplin.test3.data.db.AppDatabase;
 import com.chaplin.test3.data.db.dao.*;
@@ -8,7 +7,7 @@ import com.chaplin.test3.data.exception.PollValidationException;
 import com.chaplin.test3.data.model.enitity.*;
 import com.chaplin.test3.data.network.client.ApiConstants;
 import com.chaplin.test3.data.network.client.Requests;
-import com.chaplin.test3.data.network.client.controller.PollController;
+import com.chaplin.test3.data.network.client.controller.SearchController;
 import com.chaplin.test3.data.network.core.DataResponse;
 import com.chaplin.test3.data.network.core.RestClient;
 import com.chaplin.test3.data.pref.Pref;
@@ -18,12 +17,11 @@ import io.reactivex.Flowable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 public class SearchResultsRepositoryImpl implements SearchResultsRepository {
 
-    private static final long THREE_SEC = 3_000;
+    private static final long THREE_SEC = 3;
 
     @NonNull
     private final RestClient<Flowable<DataResponse>> mRestClient;
@@ -47,23 +45,13 @@ public class SearchResultsRepositoryImpl implements SearchResultsRepository {
             }
             return mSession.getPollingUrl(pageIndex);
         })
-                .flatMap(pollingUrl -> {
-                    Log.d("@#$", "flatMap(" + pollingUrl + " -> mRestClient.execute(Requests.poll(pollingUrl));");
-                    return mRestClient.execute(Requests.poll(pollingUrl));
-                })
-                .repeatWhen(flowable -> {
-                    Log.d("@#$", "repeatWhen()");
-                    return flowable
-                            .takeWhile(throwable -> throwable instanceof SessionExpiredException)
-                            .zipWith(Flowable.range(1, 3), (err, attempt) -> attempt)
-                            .flatMap(attemptNumber -> {
-                                Log.d("@#$", "flatMap("+ attemptNumber +" -> timer(" + attemptNumber * THREE_SEC + " sec))");
-                                return Flowable.timer(attemptNumber * THREE_SEC, TimeUnit.SECONDS);
-                            });
-                })
-                .takeUntil(dataResponse -> !shouldContinuePolling((PollController.Parser) dataResponse.responseObject))
-                .filter(dataResponse -> !shouldContinuePolling((PollController.Parser) dataResponse.responseObject))
-                .map(dataResponse -> (PollController.Parser) dataResponse.responseObject)
+                .flatMap(pollingUrl -> mRestClient.execute(Requests.search(pollingUrl)))
+                .repeatWhen(flowable -> flowable
+                        .zipWith(Flowable.range(1, 6), (err, attempt) -> attempt)
+                        .flatMap(attemptNumber -> Flowable.timer(attemptNumber * THREE_SEC, TimeUnit.SECONDS)))
+                .takeUntil(dataResponse -> !shouldContinuePolling((SearchController.Parser) dataResponse.responseObject))
+                .filter(dataResponse -> !shouldContinuePolling((SearchController.Parser) dataResponse.responseObject))
+                .map(dataResponse -> (SearchController.Parser) dataResponse.responseObject)
                 .doOnNext(parser -> {
                     if (!validateResponse(parser)) {
                         throw new PollValidationException();
@@ -75,20 +63,25 @@ public class SearchResultsRepositoryImpl implements SearchResultsRepository {
                     }
 
                     savePollResultToDatabase(parser, !appendResults);
+                })
+                .doOnError(throwable -> {
+                    if (throwable instanceof SessionExpiredException) {
+                        mSession.resetBasePollingUrl();
+                    }
                 }).flatMap(parser -> Flowable.empty());
     }
 
-    private boolean shouldContinuePolling(PollController.Parser parser) {
+    private boolean shouldContinuePolling(SearchController.Parser parser) {
         return !ApiConstants.UPDATES_COMPLETED.equals(parser.parseStatus());
     }
 
-    private boolean validateResponse(PollController.Parser parser) {
+    private boolean validateResponse(SearchController.Parser parser) {
         return parser.parseCurrency() != null;
     }
 
     // region Save helpers
 
-    private void savePollResultToDatabase(PollController.Parser parser, boolean clearAllBeforeSave) {
+    private void savePollResultToDatabase(SearchController.Parser parser, boolean clearAllBeforeSave) {
         try {
             mDatabase.beginTransaction();
 
@@ -110,6 +103,8 @@ public class SearchResultsRepositoryImpl implements SearchResultsRepository {
             saveItineraries(mDatabase.getItineraryDao(), parser.parseItineraries());
 
             mDatabase.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             mDatabase.endTransaction();
         }

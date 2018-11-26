@@ -9,6 +9,7 @@ import androidx.paging.PagedList;
 import com.chaplin.test3.core.utils.RxUtils;
 import com.chaplin.test3.data.model.enitity.SearchResultEntity;
 import com.chaplin.test3.data.model.enitity.Session;
+import com.chaplin.test3.domain.execution.ExecutionThread;
 import com.chaplin.test3.domain.repository.SearchResultsRepository;
 import io.reactivex.disposables.Disposable;
 
@@ -22,15 +23,23 @@ public class SearchResultsBoundaryCallback extends PagedList.BoundaryCallback<Se
     private final PagingRequestHelper mPagingRequestHelper;
     @NonNull
     private final Session mSession;
+    @NonNull
+    private final ExecutionThread mUiThread;
+    @NonNull
+    private final ExecutionThread mWorkerThread;
 
     private int mPageIndex;
 
     public SearchResultsBoundaryCallback(@NonNull SearchResultsRepository repo,
                                          @NonNull Session session,
-                                         @NonNull Executor workerExecutor) {
+                                         @NonNull ExecutionThread uiThread,
+                                         @NonNull ExecutionThread workerThread,
+                                         @NonNull Executor retryExecutor) {
         mRepo = repo;
         mSession = session;
-        mPagingRequestHelper = new PagingRequestHelper(workerExecutor);
+        mWorkerThread = workerThread;
+        mPagingRequestHelper = new PagingRequestHelper(retryExecutor);
+        mUiThread = uiThread;
     }
 
     // no items loaded from DB, let's ask server for more data
@@ -60,6 +69,8 @@ public class SearchResultsBoundaryCallback extends PagedList.BoundaryCallback<Se
         mPagingRequestHelper.runIfNotRunning(type, callback -> {
             final Disposable[] subscription = new Disposable[1];
             subscription[0] = mRepo.search(pageIndex, true)
+                    .subscribeOn(mWorkerThread.getScheduler())
+                    .subscribeOn(mUiThread.getScheduler())
                     .subscribe(
                             aVoid -> { /* no-op */ },
                             throwable -> {

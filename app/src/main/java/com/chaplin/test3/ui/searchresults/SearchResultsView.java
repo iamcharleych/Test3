@@ -20,6 +20,7 @@ import com.chaplin.test3.data.exception.PollValidationException;
 import com.chaplin.test3.data.model.enitity.SearchResultEntity;
 import com.chaplin.test3.data.network.client.ApiResponseCode;
 import com.chaplin.test3.data.network.client.RequestException;
+import com.chaplin.test3.ui.searchresults.adapter.SearchResultsAdapter;
 import com.chaplin.test3.ui.searchresults.viewmodel.DataLoadingViewState;
 import com.chaplin.test3.ui.searchresults.viewmodel.action.Action;
 import io.reactivex.disposables.CompositeDisposable;
@@ -50,7 +51,7 @@ public class SearchResultsView implements SwipeRefreshLayout.OnRefreshListener, 
     private final int mRegularTextColor;
 
     public SearchResultsView(@NonNull View rootView,
-                             @NonNull RecyclerView.Adapter adapter,
+                             @NonNull SearchResultsAdapter adapter,
                              @NonNull LifecycleOwner lifecycle,
                              @NonNull LiveData<DataLoadingViewState> dataViewState,
                              @NonNull LiveData<PagedList<SearchResultEntity>> pagedList) {
@@ -69,6 +70,16 @@ public class SearchResultsView implements SwipeRefreshLayout.OnRefreshListener, 
 
         lifecycle.getLifecycle().addObserver(this);
         mPagedList = pagedList;
+        pagedList.observe(lifecycle, newPagedList -> {
+            adapter.submitList(newPagedList);
+            DataLoadingViewState dataState = dataViewState.getValue();
+            if (newPagedList != null
+                    && dataState != null
+                    && !dataState.isLoading()
+                    && (dataState.getThrowable() == null)) {
+                renderCompletedViewState();
+            }
+        });
         dataViewState.observe(lifecycle, this::renderDataViewState);
     }
 
@@ -80,8 +91,11 @@ public class SearchResultsView implements SwipeRefreshLayout.OnRefreshListener, 
 
     public void registerActionsObserver(@NonNull Consumer<? super Action> consumer) {
         mCompositeSubscription.add(mActionStream.subscribe(consumer));
-        // fire action to start refreshing search results immediately
-        mActionStream.onNext(new Action.RefreshSearchResults());
+
+        if (mPagedList.getValue() == null) {
+            // fire action to start refreshing search results immediately
+            mActionStream.onNext(new Action.RefreshSearchResults());
+        }
     }
 
     @Override

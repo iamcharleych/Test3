@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 public class SessionRepositoryImpl implements SessionRepository {
 
-    private static final long THREE_SEC = 3_000;
+    private static final long THREE_SEC = 3;
 
     @NonNull
     private final RestClient<Flowable<DataResponse>> mRestClient;
@@ -32,11 +32,10 @@ public class SessionRepositoryImpl implements SessionRepository {
                         .takeWhile(throwable -> throwable instanceof NoContentException)
                         .zipWith(Flowable.range(1, 3), (err, attempt) -> attempt)
                         .flatMap(attemptNumber -> Flowable.timer(attemptNumber * THREE_SEC, TimeUnit.SECONDS)))
-                .map(dataResponse -> (String) dataResponse.responseObject);
+                .map(dataResponse -> (String) dataResponse.responseObject)
+                .doOnNext(mSession::updateBasePollingUrl);
 
-        return Flowable.fromCallable(() -> mSession.getBasePollingUrl() == null || mSession.getBasePollingUrl().isEmpty())
-                .flatMap(startNewSession ->
-                        (startNewSession || mSession.getBasePollingUrl() == null) ?
+        return Flowable.just(mSession).flatMap(startNewSession -> !mSession.hasBasePollingUrl() ?
                                 netBasedFlowable : Flowable.just(mSession.getBasePollingUrl()));
     }
 }

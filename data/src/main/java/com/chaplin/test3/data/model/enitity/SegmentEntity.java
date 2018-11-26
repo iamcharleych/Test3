@@ -32,7 +32,7 @@ public class SegmentEntity {
     @NonNull
     @ColumnInfo(name = "arrivalDateTime")
     private String mArrivalDateTime = Constants.EMPTY;
-    @SerializedName("CarrierEntity")
+    @SerializedName("Carrier")
     @ColumnInfo(name = "carrierId")
     private long mCarrierId;
     @SerializedName("OperatingCarrier")

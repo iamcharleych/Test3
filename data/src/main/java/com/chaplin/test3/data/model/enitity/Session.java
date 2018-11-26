@@ -34,10 +34,6 @@ public class Session {
         return !TextUtils.isEmpty(mBasePollingUrl);
     }
 
-    public String getInitialPollingUrl() {
-        return getPollingUrl(0);
-    }
-
     public String getPollingUrl(int pageIndex) {
         StringBuilder sb = new StringBuilder(mBasePollingUrl);
 

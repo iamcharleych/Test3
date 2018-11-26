@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PollController {
+public class SearchController {
 
     private static final String STATUS = "Status";
     private static final String ITINERARIES = "Itineraries";
@@ -27,7 +27,7 @@ public class PollController {
     private static final String PLACES = "Places";
     private static final String CURRENCIES = "Currencies";
 
-    public static Flowable<DataResponse> poll(API api, String pollingUrl) {
+    public static Flowable<DataResponse> search(API api, String pollingUrl) {
         return api.pollSearchResults(pollingUrl)
                 .flatMap(response -> {
                     ResponseBody responseBody = response.body();

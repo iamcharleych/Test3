@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class SessionBasedUseCase<RESULT, PARAMS> extends UseCase<RESULT, PARAMS> {
 
-    private static final long THREE_SEC = 3_000;
+    private static final long THREE_SEC = 3;
 
     private final SessionRepository mSessionRepository;
 
