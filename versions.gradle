@@ -190,6 +190,7 @@ test.espresso = espresso
 test.mockito = mockito
 test.junit = buildDependency("junit", "junit", versions.junit)
 test.powerMockito = buildDependency(packs.powerMockito, 'powermock-module-junit4', versions.powerMockito)
+test.powerMockitoApi = buildDependency(packs.powerMockito, 'powermock-api-mockito', versions.powerMockito)
 deps.test = test
 // endregion
 
