@@ -10,6 +10,8 @@ dependencies {
 
     // test
     testImplementation deps.test.junit
+    testImplementation deps.arch.core.testing
+    testImplementation deps.test.mockito.core
 }
 
 sourceCompatibility = "8"

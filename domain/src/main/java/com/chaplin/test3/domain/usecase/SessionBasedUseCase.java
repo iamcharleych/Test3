@@ -20,14 +20,18 @@ public abstract class SessionBasedUseCase<RESULT, PARAMS> extends UseCase<RESULT
 
     @Override
     protected final Flowable<RESULT> appendOperators(Flowable<RESULT> flowable) {
-        return flowable.retryWhen(error -> error
-                .takeWhile(throwable -> throwable instanceof SessionExpiredException)
-                .zipWith(Flowable.range(1, 3), (err, attempt) -> attempt)
-                .flatMap(attemptNumber -> Flowable.timer(attemptNumber * THREE_SEC, TimeUnit.SECONDS)));
+        return flowable.retryWhen(this::repeatTimer);
     }
 
     @Override
     protected final Flowable<?> createPreSourceObservable() {
         return mSessionRepository.setupSession();
+    }
+
+    protected Flowable repeatTimer(Flowable<Throwable> throwableFlowable) {
+        return throwableFlowable
+                .takeWhile(throwable -> throwable instanceof SessionExpiredException)
+                .zipWith(Flowable.range(1, 3), (err, attempt) -> attempt)
+                .flatMap(attemptNumber -> Flowable.timer(attemptNumber * THREE_SEC, TimeUnit.SECONDS));
     }
 }
