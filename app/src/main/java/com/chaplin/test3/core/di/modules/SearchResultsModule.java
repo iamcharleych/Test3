@@ -42,7 +42,9 @@ public abstract class SearchResultsModule {
 
     @Provides
     static SearchResultsBoundaryCallback provideSearchResultsBoundaryCallback(
-            SearchResultsRepository repo, Session session, @Named(ANDROID) ExecutionThread observerThread,
+            SearchResultsRepository repo,
+            Session session,
+            @Named(ANDROID) ExecutionThread observerThread,
             @Named(IO) ExecutionThread workerThread) {
         return new SearchResultsBoundaryCallback(repo, session, observerThread, workerThread,
                 Executors.newSingleThreadExecutor());

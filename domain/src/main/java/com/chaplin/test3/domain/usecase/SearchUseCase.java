@@ -1,11 +1,14 @@
 package com.chaplin.test3.domain.usecase;
 
 import com.chaplin.test3.domain.execution.ExecutionThread;
+import com.chaplin.test3.domain.model.SearchResult;
 import com.chaplin.test3.domain.repository.SearchResultsRepository;
 import com.chaplin.test3.domain.repository.SessionRepository;
 import io.reactivex.Flowable;
 
-public class SearchUseCase extends SessionBasedUseCase<Void, Integer> {
+import java.util.List;
+
+public class SearchUseCase extends SessionBasedUseCase<List<SearchResult>, Integer> {
 
     private final SearchResultsRepository mSearchResultsRepository;
 
@@ -18,7 +21,7 @@ public class SearchUseCase extends SessionBasedUseCase<Void, Integer> {
     }
 
     @Override
-    public Flowable<Void> createObservable(Integer pageIndex) {
+    public Flowable<List<SearchResult>> createObservable(Integer pageIndex) {
         return mSearchResultsRepository.search(pageIndex, false);
     }
 }

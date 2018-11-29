@@ -1,4 +1,4 @@
-package com.chaplin.test3.data.exception;
+package com.chaplin.test3.domain.exception;
 
 public class PollValidationException extends Exception {
     public PollValidationException() {

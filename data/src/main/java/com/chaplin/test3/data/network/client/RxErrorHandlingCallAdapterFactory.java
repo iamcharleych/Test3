@@ -1,6 +1,6 @@
 package com.chaplin.test3.data.network.client;
 
-import com.chaplin.test3.data.exception.NoContentException;
+import com.chaplin.test3.domain.exception.NoContentException;
 import com.chaplin.test3.domain.exception.SessionExpiredException;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;

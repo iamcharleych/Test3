@@ -9,11 +9,14 @@ import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 import com.chaplin.test3.data.model.enitity.SearchResultEntity;
+import com.chaplin.test3.domain.model.SearchResult;
 import com.chaplin.test3.domain.usecase.SearchUseCase;
 import com.chaplin.test3.ui.searchresults.viewmodel.action.Action;
 import io.reactivex.functions.Consumer;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
+
+import java.util.List;
 
 public class SearchResultsViewModel extends ViewModel {
 
@@ -73,7 +76,7 @@ public class SearchResultsViewModel extends ViewModel {
         }
     }
 
-    private class SearchSubscriber implements Subscriber<Void> {
+    private class SearchSubscriber implements Subscriber<List<SearchResult>> {
 
         @NonNull
         private final MutableLiveData<DataLoadingViewState> mDataViewState;
@@ -88,7 +91,7 @@ public class SearchResultsViewModel extends ViewModel {
         }
 
         @Override
-        public void onNext(Void aVoid) {
+        public void onNext(List<SearchResult> list) {
             // no-op
         }
 

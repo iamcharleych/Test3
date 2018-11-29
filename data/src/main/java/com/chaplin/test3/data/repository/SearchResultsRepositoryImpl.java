@@ -3,7 +3,7 @@ package com.chaplin.test3.data.repository;
 import androidx.annotation.NonNull;
 import com.chaplin.test3.data.db.AppDatabase;
 import com.chaplin.test3.data.db.dao.*;
-import com.chaplin.test3.data.exception.PollValidationException;
+import com.chaplin.test3.domain.exception.PollValidationException;
 import com.chaplin.test3.data.model.enitity.*;
 import com.chaplin.test3.data.network.client.ApiConstants;
 import com.chaplin.test3.data.network.client.Requests;
@@ -12,10 +12,12 @@ import com.chaplin.test3.data.network.core.DataResponse;
 import com.chaplin.test3.data.network.core.RestClient;
 import com.chaplin.test3.data.pref.Pref;
 import com.chaplin.test3.domain.exception.SessionExpiredException;
+import com.chaplin.test3.domain.model.SearchResult;
 import com.chaplin.test3.domain.repository.SearchResultsRepository;
 import io.reactivex.Flowable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -38,7 +40,7 @@ public class SearchResultsRepositoryImpl implements SearchResultsRepository {
     }
 
     @Override
-    public Flowable<Void> search(int pageIndex, boolean appendResults) {
+    public Flowable<List<SearchResult>> search(int pageIndex, boolean appendResults) {
         return Flowable.fromCallable(() -> {
             if (!mSession.hasBasePollingUrl()) {
                 throw new SessionExpiredException();
@@ -68,7 +70,7 @@ public class SearchResultsRepositoryImpl implements SearchResultsRepository {
                     if (throwable instanceof SessionExpiredException) {
                         mSession.resetBasePollingUrl();
                     }
-                }).flatMap(parser -> Flowable.empty());
+                }).flatMap(parser -> Flowable.just(Collections.emptyList()));
     }
 
     private boolean shouldContinuePolling(SearchController.Parser parser) {

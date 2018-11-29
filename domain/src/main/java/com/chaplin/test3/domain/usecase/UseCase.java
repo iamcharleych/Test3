@@ -20,7 +20,7 @@ public abstract class UseCase<RESULT, PARAMS> {
         this.mSubscriptions = new CompositeDisposable();
     }
 
-    public abstract Flowable<RESULT> createObservable(PARAMS params);
+    protected abstract Flowable<RESULT> createObservable(PARAMS params);
 
     protected Flowable<RESULT> appendOperators(Flowable<RESULT> flowable) {
         return flowable;
