@@ -17,7 +17,6 @@ import com.chaplin.test3.domain.repository.SearchResultsRepository;
 import io.reactivex.Flowable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -70,7 +69,7 @@ public class SearchResultsRepositoryImpl implements SearchResultsRepository {
                     if (throwable instanceof SessionExpiredException) {
                         mSession.resetBasePollingUrl();
                     }
-                }).flatMap(parser -> Flowable.just(Collections.emptyList()));
+                }).flatMap(parser -> Flowable.empty());
     }
 
     private boolean shouldContinuePolling(SearchController.Parser parser) {

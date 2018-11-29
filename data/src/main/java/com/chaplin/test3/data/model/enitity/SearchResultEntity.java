@@ -1,8 +1,9 @@
 package com.chaplin.test3.data.model.enitity;
 
 import androidx.room.ColumnInfo;
+import com.chaplin.test3.domain.model.SearchResult;
 
-public class SearchResultEntity {
+public class SearchResultEntity implements SearchResult {
 
     @ColumnInfo(name = "outboundLegId")
     private String mOutboundLegId;

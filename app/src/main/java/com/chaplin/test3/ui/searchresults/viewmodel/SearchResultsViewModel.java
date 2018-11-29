@@ -92,7 +92,8 @@ public class SearchResultsViewModel extends ViewModel {
 
         @Override
         public void onNext(List<SearchResult> list) {
-            // no-op
+            mSearchUseCase.dispose();
+            mDataViewState.setValue(DataLoadingViewState.completed());
         }
 
         @Override
