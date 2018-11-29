@@ -2,10 +2,10 @@ package com.chaplin.test3.data.pref;
 
 
 import androidx.annotation.NonNull;
-import com.chaplin.test3.common.pref.BooleanPref;
-import com.chaplin.test3.common.pref.FloatPref;
-import com.chaplin.test3.common.pref.IntPref;
-import com.chaplin.test3.common.pref.StringPref;
+import com.chaplin.test3.androidcommon.pref.BooleanPref;
+import com.chaplin.test3.androidcommon.pref.FloatPref;
+import com.chaplin.test3.androidcommon.pref.IntPref;
+import com.chaplin.test3.androidcommon.pref.StringPref;
 import com.chaplin.test3.data.model.enitity.CurrencyEntity;
 
 public class Pref {

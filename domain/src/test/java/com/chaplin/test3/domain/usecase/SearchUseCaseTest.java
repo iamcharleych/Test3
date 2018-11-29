@@ -1,6 +1,7 @@
 package com.chaplin.test3.domain.usecase;
 
 import com.chaplin.test3.domain.execution.ExecutionThread;
+import com.chaplin.test3.domain.model.SearchResult;
 import com.chaplin.test3.domain.repository.SearchResultsRepository;
 import com.chaplin.test3.domain.repository.SessionRepository;
 import io.reactivex.Flowable;
@@ -10,6 +11,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyBoolean;
@@ -43,7 +47,7 @@ public class SearchUseCaseTest {
     @Test
     public void execute_validSource_successfulResult() {
         // given subscriber
-        TestSubscriber<Void> subscriber = new TestSubscriber<>();
+        TestSubscriber<List<SearchResult>> subscriber = new TestSubscriber<>();
         SearchUseCase useCase = new SearchUseCase(mSubscribeThread, mObserveThread, mSessionRepository, mSearchRepository);
 
         // when executed

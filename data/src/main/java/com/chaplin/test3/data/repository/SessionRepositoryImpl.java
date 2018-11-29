@@ -1,7 +1,7 @@
 package com.chaplin.test3.data.repository;
 
 import androidx.annotation.NonNull;
-import com.chaplin.test3.common.utils.Pair;
+import com.chaplin.test3.androidcommon.utils.Pair;
 import com.chaplin.test3.domain.exception.NoContentException;
 import com.chaplin.test3.data.model.enitity.Session;
 import com.chaplin.test3.data.network.client.Requests;

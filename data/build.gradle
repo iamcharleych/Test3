@@ -30,7 +30,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(':domain')
-    implementation project(':common')
+    implementation project(':androidcommon')
 
     // support libs
     implementation deps.support.appCompat
